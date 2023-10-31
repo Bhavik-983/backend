@@ -2,52 +2,52 @@ const Product = require("../Models/Product");
 const Category = require("../Models/Category");
 const { validationResult } = require("express-validator");
 const fs = require("fs");
-const AWS = require("aws-sdk")
+// const AWS = require("aws-sdk")
 
 
-const awsConfig= {
-  accessKeyId:process.env.Accesskey,
-  secretKeyId:process.env.secretkey,
-  region:process.env.region
-}
+// const awsConfig= {
+//   accessKeyId:process.env.Accesskey,
+//   secretKeyId:process.env.secretkey,
+//   region:process.env.region
+// }
 
-const S3 = new AWS.S3(awsConfig)
+// const S3 = new AWS.S3(awsConfig)
 
 
-const uploadS3 = (fileData) => {
- return new Promise((resolve,reject) => {
-  const params = {
-    Bucket:process.env.bucketName,
-    Key:`${Date.now().toString()}.jpg`,
-    Body: fileData
-  }
-  S3.upload(params,(err,data) => {
-    if(err){
-      // console.log(err);
-      reject(err)
-    }
-    return resolve(data)
-  })
+// const uploadS3 = (fileData) => {
+//  return new Promise((resolve,reject) => {
+//   const params = {
+//     Bucket:process.env.bucketName,
+//     Key:`${Date.now().toString()}.jpg`,
+//     Body: fileData
+//   }
+//   S3.upload(params,(err,data) => {
+//     if(err){
+//       // console.log(err);
+//       reject(err)
+//     }
+//     return resolve(data)
+//   })
 
- })
-}
+//  })
+// }
 // Create product
 exports.CreateProduct = async (req, res) => {
   try {
     const data = req.body;
-    console.log(req.file);
     if (!req.file.originalname) {
       return res.status(400).json({
         error: "Image must be required!",
       });
     }
-    uploadS3(req.file.buffer)
-    const categoryDetail = await Category.findOne({ _id: data.category });
+    // const categoryDetail = await Category.findOne({ _id: data.category });
+    // if(!categoryDetail){
+    //   return res.status(400).json({message:"category is not found!"})
+    // }
     // let cateName = [];
     // await cateName.push(categoryDetail.name);
     // data.categories = cateName;
     // data.categoryId = data.category;
-
     data.image = req.file.filename;
     const newProduct = await new Product(data).save();
     return res.status(200).json(newProduct);

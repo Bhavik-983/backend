@@ -30,28 +30,28 @@ const { GetUser } = require("../Controller/User");
 
 
 //storage for photo
-// const upload = multer(
-//   ({
-//     destination: function (req, file, cb) {
-//       cb(null, "./public/file");
-//     },
-//     filename: function (req, file, cb) {
-//       cb(null, Date.now() + "-" + file.originalname);
-//     },
-//   })
-// );
-const upload = multer({
-  limits:1024*1024*5,
-  fileFilter:function(req,file,done){
-    if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg'){
-      done(null , true)
-    }else{
-      done("file not supported" , false)
+const diskstorage = multer.diskStorage(
+  ({
+    destination: function (req, file, cb) {
+      cb(null, "./public/file");
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + "-" + file.originalname);
+    },
+  })
+);
+// const upload = multer({
+//   limits:1024*1024*5,
+//   fileFilter:function(req,file,done){
+//     if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg'){
+//       done(null , true)
+//     }else{
+//       done("file not supported" , false)
 
-    }
-  }
-})
-// const upload = multer({ storage: diskstorage });
+//     }
+//   }
+// })
+const upload = multer({ storage: diskstorage });
 // fs.unlink("./public/file", function (err) {
 //   if (err) throw err;
 //   console.log("File deleted!");
@@ -61,29 +61,29 @@ router.post(
   upload.single("image"),
 
   [
-    // check("image", "image is required!"),
+    check("image", "image is required!"),
 
-    // check("name", "Product name is required!").isLength({ min: 1 }),
-    // check("price", "price is required!").isLength({
-    //   min: 1,
-    // }),
-    // check("recycle_product_price", "recycleprice is required!").isLength({
-    //   min: 1,
-    // }),
+    check("name", "Product name is required!").isLength({ min: 1 }),
+    check("price", "price is required!").isLength({
+      min: 1,
+    }),
+    check("recycle_product_price", "recycleprice is required!").isLength({
+      min: 1,
+    }),
 
-    // check("recycle_product_weight", "weight is required!").isLength({
-    //   min: 1,
-    // }),
+    check("recycle_product_weight", "weight is required!").isLength({
+      min: 1,
+    }),
 
-    // check("category", "category is required!").isLength({
-    //   min: 1,
-    // }),
-    // check("Stock", "Stock is required!").isLength({
-    //   min: 1,
-    // }),
-    // check("description", "description is required!").isLength({
-    //   min: 1,
-    // }),
+    check("category", "category is required!").isLength({
+      min: 1,
+    }),
+    check("Stock", "Stock is required!").isLength({
+      min: 1,
+    }),
+    check("description", "description is required!").isLength({
+      min: 1,
+    }),
   ],
   // validationfield,
   // verifyTokenAndAdmin,
