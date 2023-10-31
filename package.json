@@ -4,7 +4,7 @@
   "description": "Collage project",
   "main": "index.js",
   "scripts": {
-    "start": "node App.js"
+    "start": "nodemon App.js"
   },
   "author": "Bhavik",
   "license": "ISC",
