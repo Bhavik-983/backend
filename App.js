@@ -19,7 +19,7 @@ dotenv.config();
 
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
-
+mongoose.set('strictQuery', false);
 // Database  Connection
 mongoose
   .connect(process.env.Localhost)
